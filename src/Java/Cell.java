@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Cell {
     private Color color;
+    private boolean nextState;
 
     public Cell(boolean initialState){
         if(initialState) {
@@ -11,6 +12,7 @@ public class Cell {
         } else {
             this.color = Color.black;
         }
+        nextState = false;
     }
 
 
@@ -21,14 +23,16 @@ public class Cell {
     public void getNextState(int aliveNeighbours){
         if(color == Color.black) {
             if (aliveNeighbours == 3)
-                changeState();
+                nextState = true;
         } else {
             if(aliveNeighbours < 2 || aliveNeighbours > 3)
-                changeState();
+                nextState = true;
         }
     }
 
     public void changeState(){
-        color = (color == Color.black ? Color.white : Color.black);
+        if(nextState)
+            color = (color == Color.black ? Color.white : Color.black);
+        nextState = false;
     }
 }

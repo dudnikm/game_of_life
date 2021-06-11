@@ -13,7 +13,7 @@ public class MainPanel extends JPanel implements ActionListener {
     public static int SCREEN_WIDTH = 500;
     public static int SCREEN_HEIGHT = 500;
     public static int DELAY = 150;
-    public static int SCREEN_UNIT = 25;
+    public static int SCREEN_UNIT = 10;
 
     private Timer timer;
     private boolean running;
@@ -84,22 +84,29 @@ public class MainPanel extends JPanel implements ActionListener {
                 aliveNeighbours = 0;
                 for(int k = -1; k<2;k++){
                     if(i-1 >= 0 && j+k >= 0 && j+k < SCREEN_WIDTH/SCREEN_UNIT)
-                        if(cells[i-1][j+k].getColor() == Color.white)
+                        if(cells[i-1][j+k].getColor() == Color.white) {
                             aliveNeighbours++;
+                        }
                     if(i+1 < SCREEN_HEIGHT/SCREEN_UNIT && j+k >= 0 && j+k < SCREEN_WIDTH/SCREEN_UNIT)
-                        if(cells[i+1][j+k].getColor() == Color.white)
+                        if(cells[i+1][j+k].getColor() == Color.white) {
                             aliveNeighbours++;
+                        }
                 }
                 if(j-1 >= 0 && j+1 < SCREEN_WIDTH/SCREEN_UNIT) {
-                    if (cells[i][j - 1].getColor() == Color.white)
+                    if (cells[i][j - 1].getColor() == Color.white) {
                         aliveNeighbours++;
-                    if(cells[i][j+1].getColor() == Color.white)
+                    }
+                    if(cells[i][j+1].getColor() == Color.white) {
                         aliveNeighbours++;
+                    }
                 }
                 cells[i][j].getNextState(aliveNeighbours);
-                System.out.printf("i = %d , j = %d, # = %d\n",i,j,aliveNeighbours);
             }
         }
+
+        for(int i =0; i<cells.length;i++)
+            for(int j = 0; j < cells[0].length;j++)
+                cells[i][j].changeState();
 
     }
 
