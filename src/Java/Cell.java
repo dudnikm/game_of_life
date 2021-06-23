@@ -20,6 +20,10 @@ public class Cell {
         return color;
     }
 
+    /**
+     * Calculates the next state of the cell based on its color and number of alive neighbours
+     * @param aliveNeighbours - number of alive neighbours around the cell
+     */
     public void getNextState(int aliveNeighbours){
         if(color == Color.black) {
             if (aliveNeighbours == 3)
@@ -30,6 +34,9 @@ public class Cell {
         }
     }
 
+    /**
+     * Changes the color of the cell
+     */
     public void changeState(){
         if(nextState)
             color = (color == Color.black ? Color.white : Color.black);

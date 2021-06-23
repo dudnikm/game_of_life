@@ -55,8 +55,7 @@ public class MainPanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g){
 
-        //Draw grid
-
+        //Displaying the cells
         for(int i =0; i<cells.length;i++){
             for(int j = 0; j < cells[0].length;j++){
                 g.setColor(cells[i][j].getColor());
@@ -77,21 +76,26 @@ public class MainPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Method calculates the number of white neighbours for each cell on the screen
+     */
     public void nextGeneration(){
         int aliveNeighbours;
         for(int i =0; i<cells.length;i++){
             for(int j = 0; j < cells[0].length;j++){
                 aliveNeighbours = 0;
+                //Checking upper and lower rows around the cell
                 for(int k = -1; k<2;k++){
+                    //Checking if cell has neighbours above it and their colors
                     if(i-1 >= 0 && j+k >= 0 && j+k < SCREEN_WIDTH/SCREEN_UNIT)
-                        if(cells[i-1][j+k].getColor() == Color.white) {
+                        if(cells[i-1][j+k].getColor() == Color.white)
                             aliveNeighbours++;
-                        }
+                    //Checking if cell has neighbours under it and their colors
                     if(i+1 < SCREEN_HEIGHT/SCREEN_UNIT && j+k >= 0 && j+k < SCREEN_WIDTH/SCREEN_UNIT)
-                        if(cells[i+1][j+k].getColor() == Color.white) {
+                        if(cells[i+1][j+k].getColor() == Color.white)
                             aliveNeighbours++;
-                        }
                 }
+                //Checking neighbours on the sides of the cell
                 if(j-1 >= 0 && j+1 < SCREEN_WIDTH/SCREEN_UNIT) {
                     if (cells[i][j - 1].getColor() == Color.white) {
                         aliveNeighbours++;
@@ -100,10 +104,11 @@ public class MainPanel extends JPanel implements ActionListener {
                         aliveNeighbours++;
                     }
                 }
+                //Passing number of alive cells around to getNextState method of Cell class to determine its next state
                 cells[i][j].getNextState(aliveNeighbours);
             }
         }
-
+        //Changing the state of each cell to a new one
         for(int i =0; i<cells.length;i++)
             for(int j = 0; j < cells[0].length;j++)
                 cells[i][j].changeState();
@@ -121,9 +126,11 @@ public class MainPanel extends JPanel implements ActionListener {
     class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
+            //Press space to pause simulation
             if(e.getKeyCode() == KeyEvent.VK_SPACE)
                 running = !running;
-            if(e.getKeyCode() == KeyEvent.VK_W)
+            //Press R to restart simulation
+            if(e.getKeyCode() == KeyEvent.VK_R)
                 restart();
         }
     }
